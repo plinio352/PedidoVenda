@@ -1,0 +1,188 @@
+unit UPedidoProdutoController;
+
+interface
+
+uses
+   UDmVenda, UPedidoProduto, System.SysUtils, Generics.Collections, Data.DB;
+
+
+type
+   IPedidoProdutoController = interface
+      function Getobj: TPedidoProduto;
+      procedure Setobj(const Value: TPedidoProduto);
+      function lstPedidoProduto: OleVariant;
+      function incluir: Boolean;
+      function alterar(const Value: TList<TPedidoProduto>): Boolean;
+      function excluir(const Value: TList<TPedidoProduto>): Boolean;
+      function GetLst: TList<TPedidoProduto>;
+      procedure Setadd(const Value: TPedidoProduto);
+
+      property obj: TPedidoProduto read Getobj write Setobj;
+      property add: TPedidoProduto write Setadd;
+
+   end;
+
+   TPedidoProdutoController = class(TInterfacedObject, IPedidoProdutoController)
+   private
+      Fobj: TPedidoProduto;
+      FLst: TList<TPedidoProduto>;
+
+      function Getobj: TPedidoProduto;
+      procedure Setobj(const Value: TPedidoProduto);
+      function GetLst: TList<TPedidoProduto>;
+      procedure Setadd(const Value: TPedidoProduto);
+
+   public
+      function lstPedidoProduto: OleVariant;
+      function incluir: Boolean;
+      function alterar(const Value: TList<TPedidoProduto>): Boolean;
+      function excluir(const Value: TList<TPedidoProduto>): Boolean;
+
+      constructor Create;
+      destructor Destroy; override;
+
+
+      property obj: TPedidoProduto read Getobj write Setobj;
+      property add: TPedidoProduto write Setadd;
+   end;
+implementation
+
+
+{ TPedidoProdutoController }
+
+function TPedidoProdutoController.alterar(const Value: TList<TPedidoProduto>): Boolean;
+var
+   obj: TPedidoProduto;
+begin
+   dmVenda.BeginTran;
+
+   try
+      for obj in Value do
+      begin
+         if dmVenda.qryPedidoProduto.Locate('numero_pedido', Self.Fobj.numeroPedido.numeroPedido, [loCaseInsensitive]) then begin
+            dmVenda.qryPedidoProduto.Edit;
+            dmVenda.qryPedidoProduto.FieldByName('numero_pedido').Value    := Self.Fobj.numeroPedido.numeroPedido;
+            dmVenda.qryPedidoProduto.FieldByName('codigo_produto').Value   := Self.Fobj.codigoProduto.codigo;
+            dmVenda.qryPedidoProduto.FieldByName('quantidade').Value       := Self.Fobj.quantidade;
+            dmVenda.qryPedidoProduto.FieldByName('valor_unitario').Value   := Self.Fobj.valorUnitario;
+            Self.Fobj.valorTotal := Self.Fobj.quantidade * Self.Fobj.valorUnitario;
+            dmVenda.qryPedidoProduto.FieldByName('valor_total').Value      := Self.Fobj.valorTotal;
+            dmVenda.qryPedidoProduto.Post;
+         end;
+
+      end;
+
+      dmVenda.CommitTran;
+   except on E: Exception do
+
+      dmVenda.RollbackTran;
+
+   end;
+
+   Result := true;
+
+end;
+
+constructor TPedidoProdutoController.Create;
+begin
+   inherited;
+   Self.FLst := TList<TPedidoProduto>.Create;
+
+end;
+
+destructor TPedidoProdutoController.Destroy;
+begin
+   FreeAndNil(Self.FLst);
+  inherited;
+end;
+
+function TPedidoProdutoController.excluir(const Value: TList<TPedidoProduto>): Boolean;
+var
+   obj: TPedidoProduto;
+begin
+   dmVenda.BeginTran;
+
+   try
+      for obj in Value do
+      begin
+         if dmVenda.qryPedidoProduto.Locate('numero_pedido', Self.Fobj.numeroPedido.numeroPedido, [loCaseInsensitive]) then begin
+            dmVenda.qryPedidoProduto.Delete;
+         end;
+
+      end;
+
+      dmVenda.CommitTran;
+   except on E: Exception do
+
+      dmVenda.RollbackTran;
+   end;
+
+   Result := True;
+
+end;
+
+function TPedidoProdutoController.GetLst: TList<TPedidoProduto>;
+begin
+   Result := Self.FLst;
+end;
+
+function TPedidoProdutoController.Getobj: TPedidoProduto;
+begin
+   Result := Self.Fobj;
+
+end;
+
+function TPedidoProdutoController.incluir: Boolean;
+var
+   obj: TPedidoProduto;
+const
+   sql = 'INSERT INTO pedidos_produtos(numero_pedido, codigo_produto, quantidade, valor_unitario, valor_total) '+
+         'VALUES (:numero_pedido, :codigo_produto, :quantidade, :valor_unitario, :valor_total)';
+begin
+   dmVenda.BeginTran;
+
+   try
+      for obj in Self.FLst do
+      begin
+         obj.valorTotal := obj.quantidade * obj.valorUnitario;
+
+         dmVenda.exPedPro.CommandText := sql;
+         dmVenda.exPedPro.ParamByName('numero_pedido').Value    := obj.numeroPedido.numeroPedido;
+         dmVenda.exPedPro.ParamByName('codigo_produto').Value   := obj.codigoProduto.codigo;
+         dmVenda.exPedPro.ParamByName('quantidade').Value       := obj.quantidade;
+         dmVenda.exPedPro.ParamByName('valor_unitario').Value   := obj.valorUnitario;
+         dmVenda.exPedPro.ParamByName('valor_total').Value      := obj.valorTotal;
+         dmVenda.exPedPro.ExecSQL;
+
+      end;
+
+      dmVenda.CommitTran;
+   except on E: Exception do
+
+      dmVenda.RollbackTran;
+   end;
+
+   Result := True;
+
+end;
+
+function TPedidoProdutoController.lstPedidoProduto: OleVariant;
+begin
+   dmVenda.qryPedidoProduto.Close;
+   dmVenda.qryPedidoProduto.Open;
+
+   Result := dmVenda.dspPedidoProduto.Data;
+
+end;
+
+procedure TPedidoProdutoController.Setadd(const Value: TPedidoProduto);
+begin
+  FLst.Add(Value);
+end;
+
+procedure TPedidoProdutoController.Setobj(const Value: TPedidoProduto);
+begin
+  Fobj := Value;
+end;
+
+end.

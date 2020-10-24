@@ -1,0 +1,38 @@
+unit UProdutoController;
+
+interface
+
+uses
+   UDmVenda, UProduto;
+
+type
+   IProdutoController = interface
+      function lstProduto: OleVariant;
+   end;
+
+   TProdutoController = class(TInterfacedObject, IProdutoController)
+   public
+      function lstProduto: OleVariant;
+      function BuscaProduto(const Value: Integer): TProduto;
+
+   end;
+
+implementation
+
+{ TProdutoController }
+
+function TProdutoController.BuscaProduto(const Value: Integer): TProduto;
+begin
+
+end;
+
+function TProdutoController.lstProduto: OleVariant;
+begin
+   dmVenda.qryProduto.Close;
+   dmVenda.qryProduto.Open;
+
+   Result := dmVenda.dspProduto.Data;
+
+end;
+
+end.

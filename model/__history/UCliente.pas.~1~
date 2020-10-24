@@ -1,0 +1,50 @@
+unit UCliente;
+
+interface
+
+type
+   TCliente = class
+  private
+    Fuf: string;
+    Fcodigo: int;
+    Fnome: string;
+    Fcidade: string;
+    procedure Setcidade(const Value: string);
+    procedure Setcodigo(const Value: int);
+    procedure Setnome(const Value: string);
+    procedure Setuf(const Value: string);
+
+   public
+      property codigo: int read Fcodigo write Setcodigo;
+      property nome: string read Fnome write Setnome;
+      property cidade: string read Fcidade write Setcidade;
+      property uf:string read Fuf write Setuf;
+
+   end;
+
+{código, nome, cidade, uf}
+implementation
+
+{ TCliente }
+
+procedure TCliente.Setcidade(const Value: string);
+begin
+  Fcidade := Value;
+end;
+
+procedure TCliente.Setcodigo(const Value: int);
+begin
+  Fcodigo := Value;
+end;
+
+procedure TCliente.Setnome(const Value: string);
+begin
+  Fnome := Value;
+end;
+
+procedure TCliente.Setuf(const Value: string);
+begin
+  Fuf := Value;
+end;
+
+end.

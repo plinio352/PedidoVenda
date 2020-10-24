@@ -1,0 +1,64 @@
+unit UPedidoProduto;
+
+interface
+
+type
+   TPedidoProduto = class
+  private
+    FcodigoProduto: Integer;
+    FvalorUnitario: Double;
+    Fid: Integer;
+    FvalorTotal: Double;
+    Fquantidade: Integer;
+    FnumeroPedido: Integer;
+    procedure SetcodigoProduto(const Value: Integer);
+    procedure Setid(const Value: Integer);
+    procedure SetnumeroPedido(const Value: Integer);
+    procedure Setquantidade(const Value: Integer);
+    procedure SetvalorTotal(const Value: Double);
+    procedure SetvalorUnitario(const Value: Double);
+
+   public
+      property id: Integer read Fid write Setid;
+      property numeroPedido: Integer read FnumeroPedido write SetnumeroPedido;
+      property codigoProduto: Integer read FcodigoProduto write SetcodigoProduto;
+      property quantidade: Integer read Fquantidade write Setquantidade;
+      property valorUnitario: Double read FvalorUnitario write SetvalorUnitario;
+      property valorTotal: Double read FvalorTotal write SetvalorTotal;
+end;
+
+implementation
+
+{ TPedidoProduto }
+
+procedure TPedidoProduto.SetcodigoProduto(const Value: Integer);
+begin
+  FcodigoProduto := Value;
+end;
+
+procedure TPedidoProduto.Setid(const Value: Integer);
+begin
+  Fid := Value;
+end;
+
+procedure TPedidoProduto.SetnumeroPedido(const Value: Integer);
+begin
+  FnumeroPedido := Value;
+end;
+
+procedure TPedidoProduto.Setquantidade(const Value: Integer);
+begin
+  Fquantidade := Value;
+end;
+
+procedure TPedidoProduto.SetvalorTotal(const Value: Double);
+begin
+  FvalorTotal := Value;
+end;
+
+procedure TPedidoProduto.SetvalorUnitario(const Value: Double);
+begin
+  FvalorUnitario := Value;
+end;
+
+end.

@@ -1,0 +1,28 @@
+unit UClienteController;
+
+interface
+
+uses
+   UDmVenda;
+
+type
+   TClienteController = class
+   public
+      function lstCliente: OleVariant;
+   end;
+
+implementation
+
+{ TClienteController }
+
+
+function TClienteController.lstCliente: OleVariant;
+begin
+   dmVenda.qryCliente.Close;
+   dmVenda.qryCliente.Open;
+
+   Result := dmVenda.dspCliente.Data;
+
+end;
+
+end.

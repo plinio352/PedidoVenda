@@ -1,0 +1,27 @@
+unit UProdutoController;
+
+interface
+
+uses
+   UDmVenda;
+
+type
+   TProdutoController = class
+   public
+      function lstProduto: OleVariant;
+   end;
+
+implementation
+
+{ TProdutoController }
+
+function TProdutoController.lstProduto: OleVariant;
+begin
+   dmVenda.qryProduto.Close;
+   dmVenda.qryProduto.Open;
+
+   Result := dmVenda.dspProduto.Data;
+
+end;
+
+end.

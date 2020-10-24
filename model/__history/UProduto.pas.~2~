@@ -1,0 +1,41 @@
+unit UProduto;
+
+interface
+
+type
+   TProduto = class
+  private
+    Fdescricao: string;
+    Fcodigo: Integer;
+    FprecoVenda: Double;
+    procedure Setcodigo(const Value: Integer);
+    procedure Setdescricao(const Value: string);
+    procedure SetprecoVenda(const Value: Double);
+
+   public
+      property codigo: Integer read Fcodigo write Setcodigo;
+      property descricao: string read Fdescricao write Setdescricao;
+      property precoVenda: Double read FprecoVenda write SetprecoVenda;
+
+   end;
+
+implementation
+
+{ TProduto }
+
+procedure TProduto.Setcodigo(const Value: Integer);
+begin
+  Fcodigo := Value;
+end;
+
+procedure TProduto.Setdescricao(const Value: string);
+begin
+  Fdescricao := Value;
+end;
+
+procedure TProduto.SetprecoVenda(const Value: Double);
+begin
+  FprecoVenda := Value;
+end;
+
+end.

@@ -1,0 +1,48 @@
+unit UPedidoDadosGerais;
+
+interface
+
+type
+   TPedidoDadosGerais = class
+  private
+    FvalorTotal: Double;
+    FdataEmissao: TDateTime;
+    FcodigoCliente: Integer;
+    FnumeroPedido: Integer;
+    procedure SetcodigoCliente(const Value: Integer);
+    procedure SetdataEmissao(const Value: TDateTime);
+    procedure SetnumeroPedido(const Value: Integer);
+    procedure SetvalorTotal(const Value: Double);
+
+   public
+      property numeroPedido: Integer read FnumeroPedido write SetnumeroPedido;
+      property dataEmissao: TDateTime read FdataEmissao write SetdataEmissao;
+      property codigoCliente: Integer read FcodigoCliente write SetcodigoCliente;
+      property valorTotal: Double read FvalorTotal write SetvalorTotal;
+   end;
+
+implementation
+
+{ TPedidoDadosGerais }
+
+procedure TPedidoDadosGerais.SetcodigoCliente(const Value: Integer);
+begin
+  FcodigoCliente := Value;
+end;
+
+procedure TPedidoDadosGerais.SetdataEmissao(const Value: TDateTime);
+begin
+  FdataEmissao := Value;
+end;
+
+procedure TPedidoDadosGerais.SetnumeroPedido(const Value: Integer);
+begin
+  FnumeroPedido := Value;
+end;
+
+procedure TPedidoDadosGerais.SetvalorTotal(const Value: Double);
+begin
+  FvalorTotal := Value;
+end;
+
+end.
