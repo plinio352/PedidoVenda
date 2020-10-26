@@ -337,6 +337,7 @@ object frmPedidoVenda: TfrmPedidoVenda
     object cdsProdutopreco_venda: TFloatField
       DisplayLabel = 'Pre'#231'o Venda'
       FieldName = 'preco_venda'
+      DisplayFormat = '#,##0.00'
     end
   end
   object cdsPedidoGerais: TClientDataSet
@@ -371,6 +372,7 @@ object frmPedidoVenda: TfrmPedidoVenda
       DisplayLabel = 'Iid'
       FieldName = 'id'
       Required = True
+      DisplayFormat = '#00'
     end
     object cdsPedidoProdutonumero_pedido: TIntegerField
       DisplayLabel = 'Numero Pedido'
@@ -387,21 +389,24 @@ object frmPedidoVenda: TfrmPedidoVenda
     object cdsPedidoProdutoquantidade: TIntegerField
       DisplayLabel = 'Quantidade'
       FieldName = 'quantidade'
+      DisplayFormat = '#00'
     end
     object cdsPedidoProdutovalor_unitario: TFloatField
       DisplayLabel = 'Valor Unitario'
       FieldName = 'valor_unitario'
+      DisplayFormat = '#,##0.00'
     end
     object cdsPedidoProdutovalor_total: TFloatField
       DisplayLabel = 'Valor Total'
       FieldName = 'valor_total'
+      DisplayFormat = '#,##0.00'
     end
   end
   object ilPadrao16: TImageList
     Left = 208
     Top = 424
     Bitmap = {
-      494C010101000800680010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101010008006C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       000000000000000000000000000000000000FFFFFFFF314B6200AC7D7E00FFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF

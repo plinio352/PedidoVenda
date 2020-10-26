@@ -176,6 +176,10 @@ begin
    cdsPedidoProduto.CreateDataSet;
    cdsPedidoProduto.Open;
 
+   FCnt:= 0;
+   FTotalGeral:= 0;
+
+
 end;
 
 procedure TfrmPedidoVenda.dbgItensKeyDown(Sender: TObject; var Key: Word;
